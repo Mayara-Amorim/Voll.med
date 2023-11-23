@@ -1,0 +1,1 @@
+alter table pacientes add cpf VARCHAR(14) NOT NULL;
