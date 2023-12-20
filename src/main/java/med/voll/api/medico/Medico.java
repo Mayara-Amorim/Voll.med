@@ -106,10 +106,6 @@ public class Medico {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
 	public void atualizar(@Valid DadosAtualizarMedico dados) {
 		if(dados.nome()!= null) {
 			this.nome = dados.nome();		
