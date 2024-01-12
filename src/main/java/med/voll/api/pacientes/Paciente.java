@@ -42,12 +42,8 @@ public class Paciente {
 		 this.endereco = new Endereco(dados.endereco());
 		
 		}
-		
-		public Paciente ()
-		{
-			
-		}
-		public long getId() {
+
+	public long getId() {
 			return id;
 		}
 

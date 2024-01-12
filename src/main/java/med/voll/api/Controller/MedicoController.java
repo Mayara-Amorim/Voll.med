@@ -32,7 +32,7 @@ import med.voll.api.medico.MedicoRepository;
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
-	@Autowired
+	@Autowired(required=true)
 	private MedicoRepository mr;
 	
 	@PostMapping

@@ -50,10 +50,6 @@ public class Medico {
 		this.endereco = new Endereco(dados.endereco());
 	}
 
-	public Medico() {
-		
-	}
-	
 	public long getId() {
 		return id;
 	}

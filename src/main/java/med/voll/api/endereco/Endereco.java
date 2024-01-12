@@ -20,12 +20,8 @@ public class Endereco {
 	 private String uf; 
 	 private String complemento; 
 	 private String numero;
-	 
-	 public Endereco() {
-		 
-	 }
-	 
-	 public Endereco(DadosEndereco dados) {
+
+	public Endereco(DadosEndereco dados) {
 		this.logradouro = dados.logradouro();
 		this.bairro = dados.bairro();
 		this.cep = dados.cep();
