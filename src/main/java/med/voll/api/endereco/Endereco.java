@@ -3,9 +3,7 @@ package med.voll.api.endereco;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
 import lombok.NoArgsConstructor;
-import med.voll.api.medico.DadosAtualizarMedico;
 
 @Embeddable
 
