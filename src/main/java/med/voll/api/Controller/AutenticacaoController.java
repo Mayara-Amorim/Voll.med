@@ -19,10 +19,10 @@ public class AutenticacaoController {
     private AuthenticationManager am;
 
     @PostMapping
-    public  ResponseEntity efetuarLogin(RequestBody @Valid DadosAutenticacao data){
-        var token = new UsernamePasswordAuthenticationToken(data.login, data.senha);
+    public  ResponseEntity efetuarLogin( @RequestBody @Valid DadosAutenticacao data){
+        var token = new UsernamePasswordAuthenticationToken(data.login(), data.senha());
        var authentication = am.authenticate(token);
-       return null;
+       return ResponseEntity.ok().build();
     }
 
 
