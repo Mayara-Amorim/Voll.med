@@ -36,11 +36,18 @@ public class SecurityConfiguration {
 //    }
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(csrf -> csrf.disable())
+    return http.csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();
 }
 
+
+
+
+//    Bean AuthenticationManager: Este bean é criado para fornecer uma instância do AuthenticationManager
+//    que pode ser usada para autenticar tokens de autenticação. A configuração específica
+//    do AuthenticationManager (como os provedores de autenticação e as políticas de autenticação)
+//    é definida na AuthenticationConfiguration
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -50,10 +57,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/login"));
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/login"));
+//    }
 
 }
 

@@ -1,6 +1,7 @@
 package med.voll.api.Controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +18,15 @@ import med.voll.api.usuario.*;
 public class AutenticacaoController {
     @Autowired
     private AuthenticationManager am;
-
+    private TokenService tS;
+    //Método efetuarLogin: Este método é responsável por receber as credenciais do usuário, criar
+//um token de autenticação com essas credenciais, autenticar o token usando o AuthenticationManager,
+//e retornar um token de acesso ao usuário.
     @PostMapping
     public  ResponseEntity efetuarLogin( @RequestBody @Valid DadosAutenticacao data){
         var token = new UsernamePasswordAuthenticationToken(data.login(), data.senha());
        var authentication = am.authenticate(token);
-       return ResponseEntity.ok().build();
+       return ResponseEntity.ok(tS.gerarToken((Usuario) authentication));
     }
 
 

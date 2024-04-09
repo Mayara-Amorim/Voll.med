@@ -22,25 +22,40 @@ public class Usuario implements UserDetails {
 	private long id;
 	private String login;
 	private String senha;
-	public Usuario(){
+
+	public Usuario() {
 
 	}
+
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getLogin() {
 		return login;
 	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getSenha() {
 		return senha;
 	}
 
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	/*
-	O Spring tem esse metodo para controle de perfil de acesso que retorna uma coleção,
-	nossa aplicaçao não tem isso, então passamos esse perfil padrão do Spring mesmo, so
-	para manter o contrato da interface.
-	*/
+        O Spring tem esse metodo para controle de perfil de acesso que retorna uma coleção,
+        nossa aplicaçao não tem isso, então passamos esse perfil padrão do Spring mesmo, so
+        para manter o contrato da interface.
+        */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
