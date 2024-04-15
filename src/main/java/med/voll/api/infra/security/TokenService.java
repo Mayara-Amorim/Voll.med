@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import med.voll.api.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,12 +14,16 @@ import java.util.Date;
 
 @Service
 public class TokenService {
+@Value("${api.security.secret}")
+    private String secret;
     private Instant dataExpiracao() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-3:00"));
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
     public String gerarToken(Usuario user){
+        System.out.println(secret);
         try {
-            Algorithm algoritmo = Algorithm.HMAC256("123456");
+
+            Algorithm algoritmo = Algorithm.HMAC256(secret);
            return JWT.create()
                     .withIssuer("API Voll.med")
                    .withSubject(user.getLogin())
