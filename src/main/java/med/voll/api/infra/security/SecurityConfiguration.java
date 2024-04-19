@@ -1,5 +1,6 @@
 package med.voll.api.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +24,8 @@ import jakarta.servlet.Filter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+@Autowired
+    private SecurityFilter sF;
 //    @Primary
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http, Filter securityFilter) throws Exception {
 //        return http.csrf(csrf -> csrf.disable())
@@ -41,9 +44,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
                     .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(req -> {
                         req.requestMatchers("/login").permitAll();
+//                          req.requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN");
+//                                req.requestMatchers(HttpMethod.DELETE, "/pacientes").hasRole("ADMIN");
                         req.anyRequest().authenticated();
-                    })
+                    })//ele precisa receber um filtro. Qual filtro? O nosso filtro e como segundo parametro o filtro do Spring
+                    //E como se dissesse: primeiro o meu filtro e depois o seu
+                    .addFilterBefore(sF, UsernamePasswordAuthenticationFilter.class)
                     .build();
+
 }
 
 

@@ -17,14 +17,16 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
-    private TokenService sF;
+    private TokenService tS ;
+    @Autowired
     private UsuarioRepository uR;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var tokenJWT = recuperarToken(request);
         if(tokenJWT!= null){
-            var subject = sF.getSubject(tokenJWT);
+            var subject = tS.getSubject(tokenJWT);
+            System.out.println(tS.getSubject(tokenJWT));
             var usuario = uR.findByLogin(subject);
             Authentication authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -37,7 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String recuperarToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
         if(authorizationHeader != null) {
-            return authorizationHeader.replace("Bearer", "");
+            return authorizationHeader.replace("Bearer ", "");
         }
         return null;
         //throw new RuntimeException("Token não enviado no cabeçalho");

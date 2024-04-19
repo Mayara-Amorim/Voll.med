@@ -22,11 +22,11 @@ public class Usuario implements UserDetails {
 	private long id;
 	private String login;
 	private String senha;
+	//private Perfis perfis;
 
 	public Usuario() {
 
 	}
-
 	public long getId() {
 		return id;
 	}
