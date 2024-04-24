@@ -1,9 +1,7 @@
-package med.voll.api.consultas.validacoes;
+package med.voll.api.consultas.validacoes.agendamento;
 
 import med.voll.api.consultas.DadosAgendamentoConsulta;
 import med.voll.api.consultas.ValidacaoExceptionUsuario;
-import med.voll.api.medico.MedicoRepository;
-import med.voll.api.pacientes.Paciente;
 import med.voll.api.pacientes.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

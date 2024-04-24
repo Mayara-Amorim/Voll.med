@@ -1,6 +1,7 @@
 package med.voll.api.consultas;
 
-import med.voll.api.consultas.validacoes.ValidadorAgendamentoDeConsulta;
+import med.voll.api.consultas.validacoes.agendamento.ValidadorAgendamentoDeConsulta;
+import med.voll.api.consultas.validacoes.cancelamento.ValidadorCancelamentoDeConsulta;
 import med.voll.api.medico.Medico;
 import med.voll.api.medico.MedicoRepository;
 import med.voll.api.pacientes.PacienteRepository;
@@ -20,8 +21,10 @@ public class AgendaDeConsultas {
     private MedicoRepository medicoRepo;
     @Autowired
     private List<ValidadorAgendamentoDeConsulta> validadores;
+    @Autowired
+    private List<ValidadorCancelamentoDeConsulta> validadoresCancelamento;
 
-    public void agendar(DadosAgendamentoConsulta dados){
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados){
         //validacoes de integridade
         if(!pacienteRepo.existsById(dados.idPaciente())){
             throw new ValidacaoExceptionUsuario("Id do paciente não existe!");
@@ -30,19 +33,25 @@ public class AgendaDeConsultas {
             throw new ValidacaoExceptionUsuario("Id do medico não existe!");
         }
 
+
         validadores.forEach(v-> v.validar(dados));
 
         var paciente = pacienteRepo.findById(dados.idPaciente()).get();
         //var medico = medicoRepo.findById(dados.idMedico());
 
         var medico = escolherMedico(dados);
-
+        if(medico == null){
+            throw new ValidacaoExceptionUsuario("Não temos um medico nessa data");
+        }
 
         //no final de tudoo que eu preciso eh salvar no banco um objeto do tipo Consulta();
-        consultaRepo.save(new Consulta(null, medico, paciente, dados.data(), null));
+        var consulta = new Consulta(null, medico, paciente, dados.data(), null);
+        consultaRepo.save(consulta);
         //o medico e o paciente não estão vindo na requisição apenas o id, então
         //vamos pecisar carregar essa entidades para criar o objeto.
         //colocamos um get() pq finfById devolve um Optional<T>
+
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {
@@ -60,6 +69,7 @@ public class AgendaDeConsultas {
         if (!consultaRepo.existsById(dados.idConsulta())) {
             throw new ValidacaoExceptionUsuario("Id da consulta informado não existe!");
         }
+        validadoresCancelamento.forEach(v -> v.validar(dados));
 
         var consulta = consultaRepo.getReferenceById(dados.idConsulta());
         consulta.cancelar(dados.motivo());

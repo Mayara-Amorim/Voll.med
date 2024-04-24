@@ -1,4 +1,4 @@
-package med.voll.api.consultas.validacoes;
+package med.voll.api.consultas.validacoes.agendamento;
 
 import med.voll.api.consultas.ConsultasRepository;
 import med.voll.api.consultas.DadosAgendamentoConsulta;
@@ -13,7 +13,7 @@ public class ValidadorMedicoOutraConsultaNoMesmoHorario implements ValidadorAgen
 
 
     public void validar(DadosAgendamentoConsulta dados){
-       var existeConsultaMedicoMesmoHorario = consultaRepo.existsByMedicoIdAndData(dados.idMedico(), dados.data());
+       var existeConsultaMedicoMesmoHorario = consultaRepo.existsByMedicoIdAndDataAndMotivoIsNull(dados.idMedico(), dados.data());
 
        if(existeConsultaMedicoMesmoHorario){
            throw new ValidacaoExceptionUsuario("Medico com consulta no mesmo horario");

@@ -1,6 +1,7 @@
 package med.voll.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.consultas.ValidacaoExceptionUsuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -27,6 +28,10 @@ public class TratadorErros {
 		//return ResponseEntity.badRequest().body(e); tá trazendo tudo no JSON
 		return ResponseEntity.badRequest().body(e.stream()
 				.map(DadosErroDTO::new).toList());
+	}
+	@ExceptionHandler(ValidacaoExceptionUsuario.class)
+	public ResponseEntity erroDeValidacoes(ValidacaoExceptionUsuario cause){
+		return ResponseEntity.badRequest().body(cause.getMessage());
 	}
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity tratarErro400(HttpMessageNotReadableException ex) {

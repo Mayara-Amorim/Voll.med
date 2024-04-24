@@ -1,4 +1,4 @@
-package med.voll.api.consultas.validacoes;
+package med.voll.api.consultas.validacoes.agendamento;
 
 import med.voll.api.consultas.DadosAgendamentoConsulta;
 import med.voll.api.consultas.ValidacaoExceptionUsuario;
@@ -14,11 +14,10 @@ public class ValidadorHorarioAntecendencia implements ValidadorAgendamentoDeCons
     public void validar(DadosAgendamentoConsulta dados){
         var dataConsulta = dados.data();
         var dataAtual = LocalDateTime.now();
-        var diferença = Duration.between(dataAtual, dataAtual).toMinutes();
-        if(diferença < 30)
+        var diferenca = Duration.between(dataAtual, dataConsulta).toMinutes();
+        if(diferenca < 30)
             throw new ValidacaoExceptionUsuario("""
-                    A consilta deve ser agendada com pelo menos
-                    30 minutos de antecedencia
+                    A consulta deve ser agendada com pelo menos 30 minutos de antecedencia
                     """);
 
 
