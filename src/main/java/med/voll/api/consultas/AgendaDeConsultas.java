@@ -18,7 +18,6 @@ public class AgendaDeConsultas {
     private PacienteRepository pacienteRepo;
     @Autowired
     private MedicoRepository medicoRepo;
-
     @Autowired
     private List<ValidadorAgendamentoDeConsulta> validadores;
 
