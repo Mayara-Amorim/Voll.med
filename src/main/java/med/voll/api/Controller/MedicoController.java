@@ -53,7 +53,6 @@ public class MedicoController {
 		
 	}
 
-
 	//@Secured("ROLE_ADMIN")
 	@DeleteMapping("/{id}")
 	@Transactional
