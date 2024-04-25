@@ -1,5 +1,7 @@
 package med.voll.api.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.consultas.AgendaDeConsultas;
 import med.voll.api.consultas.DadosAgendamentoConsulta;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping ("consultas")
+@SecurityRequirement(name = "bearer-key")
 public class ConsultaController {
     @Autowired
     private AgendaDeConsultas agConsulta;

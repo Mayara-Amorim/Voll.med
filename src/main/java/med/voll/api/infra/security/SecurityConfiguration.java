@@ -43,8 +43,9 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             http.csrf(AbstractHttpConfigurer::disable)
                     .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(req -> {
-                        req.requestMatchers("/login").permitAll();
 //                          req.requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN");
+                        req.requestMatchers("/login").permitAll();
+                        req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
 //                                req.requestMatchers(HttpMethod.DELETE, "/pacientes").hasRole("ADMIN");
                         req.anyRequest().authenticated();
                     })//ele precisa receber um filtro. Qual filtro? O nosso filtro e como segundo parametro o filtro do Spring
